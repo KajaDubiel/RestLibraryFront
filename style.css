@@ -1,0 +1,64 @@
+body{
+	background-color: lightgrey;
+}
+
+h1, h2{
+	text-align: center;
+	padding: 5px;
+	margin-bottom: 20px;
+}
+
+
+
+.panel{
+	border: 0.5px solid white;
+}
+
+.panel-heading{
+	text-align: center;
+}
+
+.forms{
+	width: 100%;
+	display: flex;
+	justify-content: space-around;
+	margin-bottom: 30px;
+}
+
+.book-form, .reader-form{
+	width: 45%;
+	/*display: inline-block;
+	margin-bottom: 20px;*/
+}
+
+.reader-form{
+	margin-left: 3%;
+}
+
+.container{
+	margin: 0 auto;
+	padding: 0;
+}
+
+
+.btn{
+	background-color: #AB8A1F;
+	border: none;
+	margin: 0;
+}
+
+.btn-primary: hover{
+	background-color: #9A790E;
+}
+
+.panel-heading{
+	height: 50px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.panel{
+	margin-bottom: 30px;
+}
+
