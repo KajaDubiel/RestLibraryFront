@@ -62,3 +62,8 @@ h1, h2{
 	margin-bottom: 30px;
 }
 
+.buttons{
+	display: flex;
+	justify-content: space-around;
+}
+

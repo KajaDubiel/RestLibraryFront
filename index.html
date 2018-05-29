@@ -19,9 +19,9 @@
       <div class="book-form">
         <h2>Add new book</h2>
         <div class="form-group row">
-          <label for="author" class="col-2 col-form-label">Author</label>
+          <label for="author" class="col-2 col-form-label label">Author</label>
           <div class="col-10">
-            <input class="form-control" type="text" placeholder="Author" id="author">
+            <input class="form-control author" type="text" placeholder="Author" id="author">
           </div>
         </div>
 
@@ -46,7 +46,7 @@
           </div>
         </div>
 
-        <div class="text-center"><button class="btn btn-secondary btn-lg center-block">Create book</button></div>
+        <div class="text-center"><button class="btn btn-secondary btn-lg center-block" id="create-book">Create book</button></div>
       </div>
 
       <!--Add reader-->
@@ -84,46 +84,51 @@
         <h3>Books</h3>
       </div>
       <div class="panel-body">
-        
-        <table class="table table-stripped">
+
+        <table class="table table-stripped books">
           <tr>
-            <td>ID</td>
-            <td>TITLE</td>
-            <td>AUTHOR</td>
-            <td>YEAR</td>
-            <td>ISBN</td>
-            <td>COPIES</td>
+            <td class ="bookIdTd">ID</td>
+            <td class = "bookTitleTd">TITLE</td>
+            <td class = "bookAuthorTd">AUTHOR</td>
+            <td class = "bookYearTd">YEAR</td>
+            <td class = "bookIsbnTd">ISBN</td>
+            <td class = "bookCopiesTd">COPIES</td>
 
           </tr>
           <tr>
-            <td>1</td>
-            <td>Ogniem i mieczem</td>
-            <td>Henryk Sienkiewicz</td>
-            <td>2000</td>
-            <td>1227687</td>
-            <td>2</td>
+            <td class ="bookIdTd">1</td>
+            <td class = "bookTitleTd">Ogniem i mieczem</td>
+            <td class = "bookAuthorTd">Henryk Sienkiewicz</td>
+            <td class = "bookYearTd">2000</td>
+            <td  class = "bookIsbnTd">1227687</td>
+            <td class = "bookCopiesTd">2</td>
             <!--new copy-->
             <!--  <td><button class="btn btn-secondary btn-sm">Add new copy</button></td> -->
 
-            <td><button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              Add copy
-            </button>
-            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-              <div class="form-group">
-                <label for="exampleDropdownFormEmail2">Inventory number</label>
-                <input type="text" class="form-control" id="exampleDropdownFormEmail2" placeholder="Inventory number">
-              </div>
-            </div></td>
+            <td>
+              <div class="buttons">
 
-            <td><button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              Select reader
-            </button>
-            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-              <a class="dropdown-item" href="#">Jan Nowak</a>
-              <a class="dropdown-item" href="#">Adam Kowalski</a>
-              <a class="dropdown-item" href="#">Monika Malinowska</a>
-            </div></td>
-            <td><button class="btn btn-secondary btn-sm">Delete book</button></td>
+                <button class="btn btn-secondary btn-sm dropdown-toggle button-add-copy" type="button" id="dropdownMenuButtonCopy" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Add copy
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButtonCopy">
+                  <div class="form-group">
+                    <label for="exampleDropdownFormEmail2">Inventory number</label>
+                    <input type="text" class="form-control" id="exampleDropdownFormEmail2" placeholder="Inventory number">
+                  </div>
+                </div>
+
+                <button class="btn btn-secondary btn-sm dropdown-toggle select-reader" type="button" id="dropdownMenuButtonReader" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Select reader
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButtonReader">
+                  <a class="dropdown-item" href="#">Jan Nowak</a>
+                  <a class="dropdown-item" href="#">Adam Kowalski</a>
+                  <a class="dropdown-item" href="#">Monika Malinowska</a>
+                </div>
+                <button class="btn btn-secondary btn-sm">Delete book</button>
+              </div>
+            </td>
           </tr>
           <tr>
             <td>2</td>
@@ -133,24 +138,31 @@
             <td>38276</td>
             <td>1</td>
             <!--   <td><button class="btn btn-secondary btn-sm">Add new copy</button></td> -->
-            <td><button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              Add copy
-            </button>
-            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-              <div class="form-group">
-                <label for="exampleDropdownFormEmail2">Inventory number</label>
-                <input type="text" class="form-control" id="exampleDropdownFormEmail2" placeholder="Inventory number">
+            <td>
+              <div class="buttons">
+
+                <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Add copy
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                  <div class="form-group">
+                    <label for="exampleDropdownFormEmail2">Inventory number</label>
+                    <input type="text" class="form-control" id="exampleDropdownFormEmail2" placeholder="Inventory number">
+                  </div>
+                </div>
+
+                <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Select reader
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                  <a class="dropdown-item" href="#">Jan Nowak</a>
+                  <a class="dropdown-item" href="#">Adam Kowalski</a>
+                  <a class="dropdown-item" href="#">Monika Malinowska</a>
+                </div>
+                
+                <button class="btn btn-secondary btn-sm">Delete book</button>
               </div>
-            </div></td>
-            <td><button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              Select reader
-            </button>
-            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-              <a class="dropdown-item" href="#">Jan Nowak</a>
-              <a class="dropdown-item" href="#">Adam Kowalski</a>
-              <a class="dropdown-item" href="#">Monika Malinowska</a>
-            </div></td>
-            <td><button class="btn btn-secondary btn-sm">Delete book</button></td>
+            </td>
           </tr>
         </table>
       </div>     
@@ -163,7 +175,7 @@
       </div>
 
       <div class="panel-body">
-        
+
         <table class="table table-stripped">
           <tr>
             <td>ID</td>
