@@ -1,0 +1,90 @@
+body{
+	/*background-color: white;*/
+	background-color: white;
+	background: linear-gradient(
+                       rgba(255, 255, 255, 0.3),
+                       rgba(255, 255, 255, 0.3)),
+                       url('img/70medium.jpg');
+  background-repeat: repeat;
+ /* background-attachment: fixed;*/
+  
+  color: black;
+
+}
+
+h1, h2, h3, h6{
+	text-align: center;
+	padding: 5px;
+	margin-bottom: 20px;
+	color: #6d0361;
+}
+
+h6{
+	background-color: rgba(255, 255, 255, 0.7);
+	border-radius: 5px;
+}
+
+
+
+.panel{
+	border: 0.5px solid white;
+	margin-bottom: 30px;
+	border-radius: 5px;
+	background: rgba(255, 255, 255, 0.7);
+}
+
+.panel-heading{
+	padding-top: 30px;
+	height: 50px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	text-align: center;
+}
+
+.forms{
+	width: 100%;
+	display: flex;
+	justify-content: space-around;
+	margin-bottom: 30px;
+	background: rgba(255, 255, 255, 0.7);
+	padding: 20px;
+	border-radius: 10px;
+}
+
+.book-form, .reader-form{
+	width: 45%;
+	/*display: inline-block;
+	margin-bottom: 20px;*/
+}
+
+.reader-form{
+	margin-left: 3%;
+}
+
+.container{
+	margin: 0 auto;
+	padding: 0;
+}
+
+
+.btn{
+	background: linear-gradient(#6d0361 , 
+#9e4794
+);
+	//background-color: #AB8A1F;
+	border: none;
+	margin: 0;
+}
+
+.btn:hover{
+	background: linear-gradient(#5c0250 , 
+#8d3683
+);
+} 
+
+.buttons{
+	display: flex;
+	justify-content: space-around;
+}
+
