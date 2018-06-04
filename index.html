@@ -73,6 +73,13 @@
           </div>
         </div>
 
+        <div class="form-group row">
+          <label for="user-email" class="col-3 col-form-label">Email</label>
+          <div class="col-9">
+            <input class="form-control" type="email" placeholder="Email" id="user-email">
+          </div>
+        </div>
+
         <div class="text-center"><button class="btn btn-secondary btn-lg">Create reader</button></div>
 
       </div>
@@ -113,31 +120,35 @@
                 </button>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButtonCopy">
                   <div class="form-group">
-                    <label for="exampleDropdownFormEmail2">Inventory number</label>
-                    <input type="text" class="form-control" id="exampleDropdownFormEmail2" placeholder="Inventory number">
+                    <label for="inventoryNumber">Inventory number</label>
+                    <input type="text" class="form-control" id="inventoryNumber" placeholder="Inventory number">
                   </div>
                 </div>
 
-                <button class="btn btn-secondary btn-sm dropdown-toggle select-reader" type="button" id="dropdownMenuButtonReader" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  Select reader
-                </button>
-                <div class="dropdown-menu" aria-labelledby="dropdownMenuButtonReader">
-                  <a class="dropdown-item" href="#">Jan Nowak</a>
-                  <a class="dropdown-item" href="#">Adam Kowalski</a>
-                  <a class="dropdown-item" href="#">Monika Malinowska</a>
+                <div class="dropdown">
+                  <button class="btn btn-secondary btn-sm dropdown-toggle select-reader" type="button" id="dropdownMenuButtonReader" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Select reader
+                  </button>
+                  <div class="dropdown-menu" aria-labelledby="dropdownMenuButtonReader">
+                    <a class="dropdown-item" href="#">Jan Nowak</a>
+                    <a class="dropdown-item" href="#">Adam Kowalski</a>
+                    <a class="dropdown-item" href="#">Monika Malinowska</a>
+                  </div>
                 </div>
-                <button class="btn btn-secondary btn-sm">Delete book</button>
+
+                <button class="btn btn-secondary btn-sm delete-book-button">Delete book</button>
               </div>
             </td>
           </tr>
           <tr>
-            <td>2</td>
-            <td>Pan Tadeusz</td>
-            <td>Adam Mickiewicz</td>
-            <td>1967</td>
-            <td>38276</td>
-            <td>1</td>
-            <!--   <td><button class="btn btn-secondary btn-sm">Add new copy</button></td> -->
+            <td class ="bookIdTd">2</td>
+            <td class = "bookTitleTd">Pan Tadeusz</td>
+            <td class = "bookAuthorTd">Adam Mickiewicz</td>
+            <td class = "bookYearTd">1967</td>
+            <td class = "bookIsbnTd">38276</td>
+            <td class = "bookCopiesTd">1</td>
+
+            <!--BOOK TABLE BUTTONS-->
             <td>
               <div class="buttons">
 
@@ -147,20 +158,22 @@
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                   <div class="form-group">
                     <label for="exampleDropdownFormEmail2">Inventory number</label>
-                    <input type="text" class="form-control" id="exampleDropdownFormEmail2" placeholder="Inventory number">
+                    <input type="text" class="form-control" id="exampleDropdownFormEmail2" placeholder="Inventory number"/>
                   </div>
                 </div>
 
-                <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  Select reader
-                </button>
-                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                  <a class="dropdown-item" href="#">Jan Nowak</a>
-                  <a class="dropdown-item" href="#">Adam Kowalski</a>
-                  <a class="dropdown-item" href="#">Monika Malinowska</a>
+                <div class="dropdown">
+                  <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="dropdownMenuButtonSelectReader" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Select reader
+                  </button>
+                  <div class="dropdown-menu" aria-labelledby="dropdownMenuButtonSelectReader">
+                    <a class="dropdown-item" href="#">Jan Nowak</a>
+                    <a class="dropdown-item" href="#">Adam Kowalski</a>
+                    <a class="dropdown-item" href="#">Monika Malinowska</a>
+                  </div>
                 </div>
                 
-                <button class="btn btn-secondary btn-sm">Delete book</button>
+                <button class="btn btn-secondary btn-sm delete-book-button">Delete book</button>
               </div>
             </td>
           </tr>
@@ -168,7 +181,7 @@
       </div>     
     </div>
 
-    <!--panel with readers-->
+    <!--PANEL WITH READERS-->
     <div class="panel panel-default">
       <div class="panel-heading">
         <h3>Readers</h3>
@@ -176,97 +189,117 @@
 
       <div class="panel-body">
 
-        <table class="table table-stripped">
+        <table class="table table-stripped readers">
           <tr>
-            <td>ID</td>
-            <td>FIRST NAME</td>
-            <td>LAST NAME</td>
-            <td>BIRTH DATE</td>
-            <td>BORROWS</td>
+            <td class="readerId">ID</td>
+            <td class="readerFirstName">FIRST NAME</td>
+            <td class="readerLastName">LAST NAME</td>
+            <td class="readerEmail">EMAIL</td>
+            <td class="readerBirthDate">BIRTH DATE</td>
+            <td class="readerBorrows">BORROWS</td>
           </tr>
 
           <tr>
-            <td>1</td>
-            <td>Adam</td>
-            <td>Kowalski</td>
-            <td>17-08-2000</td>
-            <td>1</td>
-            <!--edit data-->
-            <td><button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              Edit
-            </button>
-            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-              <div class="form-group">
-                <label for="exampleDropdownFormEmail2">First Name</label>
-                <input type="text" class="form-control" id="exampleDropdownFormEmail2" placeholder="First name">
-              </div>
+            <td class="readerId">1</td>
+            <td class="readerFirstName">Adam</td>
+            <td class="readerLastName">Kowalski</td>
+            <td class="readerEmail">adam@kowalski</td>
+            <td class="readerBirthDate">17-08-2000</td>
+            <td class="readerBorrows">1</td>
 
-              <div class="form-group">
-                <label for="exampleDropdownFormEmail2">Last Name</label>
-                <input type="text" class="form-control" id="exampleDropdownFormEmail2" placeholder="Last name">
-              </div>
+            <!--EDIT READER DATA-->
+            <td>
+              <div class="buttons">
+                <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Edit
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                  <div class="form-group">
+                    <label for="exampleDropdownFormEmail2">First Name</label>
+                    <input type="text" class="form-control" id="exampleDropdownFormEmail2" placeholder="First name">
+                  </div>
 
-              <div class="form-group">
-                <label for="exampleDropdownFormEmail2">Birth date</label>
-                <input type="text" class="form-control" id="exampleDropdownFormEmail2" placeholder="Birth date">
-              </div>
-              <div class="button btn-secondary btn-sm">Submit</div>
-            </div>
-          </td>
+                  <div class="form-group">
+                    <label for="exampleDropdownFormEmail2">Last Name</label>
+                    <input type="text" class="form-control" id="exampleDropdownFormEmail2" placeholder="Last name">
+                  </div>
 
-          <!--return book-->
-          <td><button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Return copy
-          </button>
-          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            <a class="dropdown-item" href="#">353475</a>
-            
-          </div>
-        </td>
-        <td><button class="btn btn-secondary btn-sm">Delete reader</button></td>
-      </tr>
+                  <div class="form-group">
+                    <label for="exampleDropdownFormEmail2">Birth date</label>
+                    <input type="text" class="form-control" id="exampleDropdownFormEmail2" placeholder="Birth date">
+                  </div>
+                  <div class="button btn-secondary btn-sm">Submit</div>
+                </div>
 
-      <tr>
-        <td>2</td>
-        <td>Jan</td>
-        <td>Nowak</td>
-        <td>27-12-1965</td>
-        <td>2</td>
-        <!--edit data-->
-        <td><button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Edit
-        </button>
-        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-          <div class="form-group">
-            <label for="exampleDropdownFormEmail2">First Name</label>
-            <input type="text" class="form-control" id="exampleDropdownFormEmail2" placeholder="First name">
-          </div>
 
-          <div class="form-group">
-            <label for="exampleDropdownFormEmail2">Last Name</label>
-            <input type="text" class="form-control" id="exampleDropdownFormEmail2" placeholder="Last name">
-          </div>
+                <!--RETURN COPY OF BOOK-->
+                <div class = "dropdown">
+                  <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="return-copy" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Return copy
+                  </button>
+                  <div class="dropdown-menu" aria-labelledby="return-copy">
+                    <a class="dropdown-item" href="#">353475</a>
+                  </div>
+                </div>
 
-          <div class="form-group">
-            <label for="exampleDropdownFormEmail2">Birth date</label>
-            <input type="text" class="form-control" id="exampleDropdownFormEmail2" placeholder="Birth date">
-          </div>
-          <div class="button btn-secondary btn-sm">Submit</div>
-        </div>
-      </td>
+                <button class="btn btn-secondary btn-sm">Delete reader</button>
+              </div></td>
+            </tr>
 
-      <!--return book-->
-      <td><button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        Return copy
-      </button>
-      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-        <a class="dropdown-item" href="#">353475</a>
-        <a class="dropdown-item" href="#">222222</a>
-      </div>
-    </td>
-    <td><button class="btn btn-secondary btn-sm">Delete reader</button></td>
-  </tr>
-  
+            <tr>
+              <td class="readerId">2</td>
+              <td class="readerFirstName">Jan</td>
+              <td class="readerLastName">Nowak</td>
+              <td class="readerEmail">jan@nowak</td>
+              <td class="readerBirthDate">27-12-1965</td>
+              <td class="readerBorrows">2</td>
+
+              <!--EDIT READER DATA-->
+              <td>
+                <div class="buttons">
+                  <div>
+                    <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="dropdownMenuButtonEdit" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      Edit
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButtonEdit">
+                      <div class="form-group">
+                        <label for="reader-first-name">First Name</label>
+                        <input type="text" class="form-control" id="reader-first-name" placeholder="First name">
+                      </div>
+
+                      <div class="form-group">
+                        <label for="reader-last-name">Last Name</label>
+                        <input type="text" class="form-control" id="reader-last-name" placeholder="Last name">
+                      </div>
+
+                      <div class="form-group">
+                        <label for="reader-birthdate">Birth date</label>
+                        <input type="text" class="form-control" id="reader-birthdate" placeholder="Birth date">
+                      </div>
+                      <div class="button btn-secondary btn-sm">Submit</div>
+                    </div>
+                  </div>
+                  <!-- </td>-->
+
+                  <!--RETURN COPY OF BOOK-->
+                  <!--<td>-->
+
+                    <div class="dropdown">
+                      <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="dropdownMenuButtonReturnCopy" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Return copy
+                      </button>
+                      <div class="dropdown-menu" aria-labelledby="dropdownMenuButtonReturnCopy">
+                        <a class="dropdown-item" href="#">21524545</a>
+                        <a class="dropdown-item" href="#">54654657</a>
+                      </div>
+                    </div>
+
+   <!-- </td>
+    <td>--><button class="btn btn-secondary btn-sm">Delete reader</button>
+    </div>
+  </td>
+</tr>
+
 </table>
 </div>  
 </div>

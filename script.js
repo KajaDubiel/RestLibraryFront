@@ -4,21 +4,20 @@ $(document).ready(function() {
 	const apiRoot = 'http://localhost:8080/restLibrary/';
 	var availableBooks = {};
   var booksAmount = 0;
+  var readersAmount = 0;
+  var availableReaders = {};
   
   var booksTable = $('.books');
-  // var bookIdTd = $('.bookIdTd');
-  // var bookTitleTd = $('.bookTitleTd');
-  // var bookAuthorTd = $('.bookAuthorTd');
-  // var bookIsbnTd = $('.bookIsbnTd');
-  // var bookCopiesTd = $('bookCopiesTd');
 
-  var buttonsBook = "<div class=\"buttons\"><button class=\"btn btn-secondary btn-sm dropdown-toggle button-add-copy\" type=\"button\" id=\"dropdownMenuButton\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"false\">Add copy </button><div class=\"dropdown-menu\" aria-labelledby=\"dropdownMenuButton\"><div class=\"form-group\"><label for=\"exampleDropdownFormEmail2\">Inventory number</label><input type=\"text\" class=\"form-control\" id=\"exampleDropdownFormEmail2\" placeholder=\"Inventory number\"></div></div><button class=\"btn btn-secondary btn-sm dropdown-toggle select-reader\" type=\"button\" id=\"dropdownMenuButton\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"false\">Select reader</button><div class=\"dropdown-menu\" aria-labelledby\"dropdownMenuButton\"><a class=\"dropdown-item\" href=\"#\">Jan Nowak</a><a class=\"dropdown-item\" href=\"#\">Adam Kowalski</a><a class=\"dropdown-item\" href=\"#\">Monika Malinowska</a></div><button class=\"btn btn-secondary btn-sm\">Delete book</button></div>";
+  var buttonsBook = "<div class=\"buttons\"><button class=\"btn btn-secondary btn-sm dropdown-toggle button-add-copy\" type=\"button\" id=\"dropdownMenuButtonCopy\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"false\">Add copy </button><div class=\"dropdown-menu\" aria-labelledby=\"dropdownMenuButtonCopy\"><div class=\"form-group\"><label for=\"inventoryNumber\">Inventory number</label><input type=\"text\" class=\"form-control\" id=\"inventoryNumber\" placeholder=\"Inventory number\"></div></div><div class=\"dropdown\"><button class=\"btn btn-secondary btn-sm dropdown-toggle select-reader\" type=\"button\" id=\"dropdownMenuButtonReader\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"false\">Select reader</button><div class=\"dropdown-menu\" aria-labelledby\"dropdownMenuButtonSelectReader\"><a class=\"dropdown-item\" href=\"#\">Jan Nowak</a><a class=\"dropdown-item\" href=\"#\">Adam Kowalski</a><a class=\"dropdown-item\" href=\"#\">Monika Malinowska</a></div></div><button class=\"btn btn-secondary btn-sm delete-book-button\">Delete book</button></div>";
+
+  var buttonsReader = "<div class=\"buttons\"><button class=\"btn btn-secondary btn-sm dropdown-toggle\" type=\"button\" id=\"dropdownMenuButton\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"false\">Edit</button><div class=\"dropdown-menu\" aria-labelledby=\"dropdownMenuButton\"><div class=\"form-group\"><label for=\"exampleDropdownFormEmail2\">First Name</label><input type=\"text\" class=\"form-control\" id=\"exampleDropdownFormEmail2\" placeholder=\"First name\"></div><div class=\"form-group\"><label for=\"exampleDropdownFormEmail2\">Last Name</label><input type=\"text\" class=\"form-control\" id=\"exampleDropdownFormEmail2\" placeholder=\"Last name\"></div><div class=\"form-group\"><label for=\"exampleDropdownFormEmail2\">Birth date</label><input type=\"text\" class=\"form-control\" id=\"exampleDropdownFormEmail2\" placeholder=\"Birth date\"></div><div class=\"button btn-secondary btn-sm\">Submit</div></div><!--RETURN COPY OF BOOK--><div class=\"dropdown\"><button class=\"btn btn-secondary btn-sm dropdown-toggle\" type=\"button\" id=\"return-copy\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"false\">Return copy</button><div class=\"dropdown-menu\" aria-labelledby=\"return-copy\"><a class=\"dropdown-item\" href=\"#\">353475</a></div></div><button class=\"btn btn-secondary btn-sm\">Delete reader</button></div>";
 
 	getAllBooks();
+  getAllReaders();
 
 	function getAllBooks(){
 		const requestUrl = apiRoot + 'getBooks';
-    
 
 		$.ajax({
       	url: requestUrl,
@@ -28,7 +27,7 @@ $(document).ready(function() {
           
           console.log(books);
           booksAmount = books.length;
-          console.log(booksAmount);
+          console.log("Books amount: " + booksAmount);
           
           generateBookTable(books);
         }
@@ -38,35 +37,22 @@ $(document).ready(function() {
 	}
 
   function generateBookTable(receivedBooks){
-    
-    var $addButton = $('.button-add-copy').clone(true).children(); //??
 
-    $.each(receivedBooks, function(){
-      var result = "";
-      result += "<tr><td>" + receivedBooks[0].id + "</td>";
-          result += "<td>" + receivedBooks[0].title + "</td>";
-          result += "<td>" + receivedBooks[0].author + "</td>";
-          result += "<td>" + receivedBooks[0].releaseYear + "</td>";
-          result += "<td>" + receivedBooks[0].isbn + "</td>";
-          result += "<td>" + receivedBooks[0].copies.length + "</td>";
-          result += "<td>" + buttonsBook;
-                   + 
-          "</td></tr>"; 
+    for(var i = 0; i<receivedBooks.length; i++){
+       var result = "";
+          result += "<tr><td class =\"bookIdTd\">" + receivedBooks[i].id + "</td>";
+          result += "<td class = \"bookTitleTd\">" + receivedBooks[i].title + "</td>";
+          result += "<td class = \"bookAuthorTd\">" + receivedBooks[i].author + "</td>";
+          result += "<td class = \"bookYearTd\">" + receivedBooks[i].releaseYear + "</td>";
+          result += "<td class = \"bookIsbnTd\">" + receivedBooks[i].isbn + "</td>";
+          result += "<td class = \"bookCopiesTd\">" + receivedBooks[i].copies.length + "</td>";
+          result += "<td>" + buttonsBook + "</td></tr>";
           $(".books").append(result);
-      // bookIdTd.append(receivedBooks[0].id);
-      // bookTitleTd.append(receivedBooks[0].title);
-      // bookAuthorTd.append(receivedBooks[0].author);
-      // bookIsbnTd.append(receivedBooks[0].isbn);
-      // bookCopiesTd.append(receivedBooks[0].copies.length);
-      // booksTable.append("<tr>" + bookIsbnTd + bookTitleTd + bookAuthorTd + bookIsbnTd + bookCopiesTd + buttonsBook +"</tr>");
-
-       // receivedBooks.forEach(book => {
-       //  console.log(book.title);
-       // }) zapętla się tyle razy ile jest książek
-        });
+           
+    }
   }
 
-  function generateBook(){
+  function generateBookRequest(){
 
       $("#create-book").on("click", function(){
         var bookAuthor = $("#author").val();
@@ -78,16 +64,78 @@ $(document).ready(function() {
          $.ajax({
           url: apiRoot + "createBook",
           method: 'POST',
-          data: {
-            title: bookTitle,
-            author: bookAuthor,
-            releaseYear: bookYear,
-            isbn: bookIsbn 
-        }});
+          contentType: "application/json; charset=utf-8",
+          dataType: 'json',
+          data: JSON.stringify({
+          title: bookTitle,
+          author: bookAuthor,
+          releaseYear: bookYear,
+          isbn: bookIsbn 
+          }),
+          complete: function(data) {
+          if(data.status === 200) {
+            location.reload();
+          }
+         }
       });
-     
+      });
   }
-  generateBook();
+  generateBookRequest();
+
+  function deleteBookRequest(){
+   $(document).on("click", '.delete-book-button', function(){
+      const requestUrl = apiRoot + 'deleteBook';
+      var selectedBookId = $(this).closest("tr").find('.bookIdTd').html();//SUCCESS!!!!
+      console.log("Selected book: " + selectedBookId);
+
+      $.ajax({//cannot work beacuse copy exists. Think, should user delete copies before book? or should have possibility to delete book with all its copies in one click?
+      //url: requestUrl + '/?bookId=' + selectedBookId,
+      url: requestUrl + "?" + $.param({bookId: selectedBookId}),
+      type: 'delete',
+      method: 'DELETE',
+      success: function() {
+         $(this).closest("tr").remove();
+         location.reload();
+      }
+    });
+   });
+  }
+  deleteBookRequest();
+
+
+//READERS
+  function getAllReaders(){
+      const requestUrl = apiRoot + 'getReaders';
+
+      $.ajax({
+        url: requestUrl,
+        method: 'GET',
+        contentType: "application/json",
+        success: function(readers){
+          
+          console.log(readers);
+          readersAmount = readers.length;
+          console.log("Readers amount: " + readersAmount);
+          
+          generateReadersTable(readers);
+        }
+    });
+  }
+
+  function generateReadersTable(receivedReaders){
+     for(var i = 0; i<receivedReaders.length; i++){
+       var result = "";
+          result += "<tr><td class =\"readerId\">" + receivedReaders[i].id + "</td>";
+          result += "<td class = \"readerFirstName\">" + receivedReaders[i].firstName + "</td>";
+          result += "<td class = \"readerLastName\">" + receivedReaders[i].lastName + "</td>";
+          result += "<td class = \"readerEmail\">" + receivedReaders[i].readerEmail + "</td>";
+          result += "<td class = \"readerBirthDate\">" + receivedReaders[i].birthdate + "</td>";
+          result += "<td class = \"readerBorrows\">" + receivedReaders[i].borrows.length + "</td>";
+          result += "<td>" + buttonsReader + "</td></tr>";
+          $(".readers").append(result);
+           
+    }
+  }
 
 });
 

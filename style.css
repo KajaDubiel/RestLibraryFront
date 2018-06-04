@@ -1,5 +1,5 @@
 body{
-	background-color: lightgrey;
+	background-color: white;
 }
 
 h1, h2{
@@ -42,14 +42,19 @@ h1, h2{
 
 
 .btn{
-	background-color: #AB8A1F;
+	background: linear-gradient(#6d0361 , 
+#9e4794
+);
+	//background-color: #AB8A1F;
 	border: none;
 	margin: 0;
 }
 
-.btn-primary: hover{
-	background-color: #9A790E;
-}
+.btn:hover{
+	background: linear-gradient(#5c0250 , 
+#8d3683
+);
+} 
 
 .panel-heading{
 	height: 50px;
