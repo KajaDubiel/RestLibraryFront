@@ -89,8 +89,7 @@ $(document).ready(function() {
       var selectedBookId = $(this).closest("tr").find('.bookIdTd').html();//SUCCESS!!!!
       console.log("Selected book: " + selectedBookId);
 
-      $.ajax({//cannot work beacuse copy exists. Think, should user delete copies before book? or should have possibility to delete book with all its copies in one click?
-      //url: requestUrl + '/?bookId=' + selectedBookId,
+      $.ajax({
       url: requestUrl + "?" + $.param({bookId: selectedBookId}),
       type: 'delete',
       method: 'DELETE',
@@ -130,7 +129,7 @@ $(document).ready(function() {
           result += "<td class = \"readerFirstName\">" + receivedReaders[i].firstName + "</td>";
           result += "<td class = \"readerLastName\">" + receivedReaders[i].lastName + "</td>";
           result += "<td class = \"readerEmail\">" + receivedReaders[i].readerEmail + "</td>";
-          result += "<td class = \"readerBirthDate\">" + receivedReaders[i].birthdate + "</td>";
+          result += "<td class = \"readerBirthDate\">" + receivedReaders[i].birthDate + "</td>";
           result += "<td class = \"readerBorrows\">" + receivedReaders[i].borrows.length + "</td>";
           result += "<td>" + buttonsReader + "</td></tr>";
           $(".readers").append(result);
@@ -142,7 +141,7 @@ $(document).ready(function() {
   $("#create-reader").on("click", function(){
         var readerFirstName = $("#first-name").val();
         var readerLastName = $("#last-name").val();
-        //var readerBirthDate = $("#birth-date").val();
+        var readerBirthDate = $("#birth-date").val();
         var readerEmail = $("#user-email").val();
 
         //date
@@ -161,7 +160,7 @@ $(document).ready(function() {
           data: JSON.stringify({
           firstName: readerFirstName,
           lastName: readerLastName,
-          birthDate: date,//:(:(:(((
+          birthDate: readerBirthDate,
           readerEmail: readerEmail
           }),
           complete: function(data) {
