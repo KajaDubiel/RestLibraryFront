@@ -1,8 +1,8 @@
 
 $(document).ready(function() {
 	console.log( "ready!" );
-	//const apiRoot = 'http://localhost:8080/restLibrary/';
-  const apiRoot = 'https://sheltered-scrubland-57989.herokuapp.com/restLibrary/';
+	const apiRoot = 'http://localhost:8080/restLibrary/';
+  //const apiRoot = 'https://sheltered-scrubland-57989.herokuapp.com/restLibrary/';
 	var availableBooks = {};
   var booksAmount = 0;
   var readersAmount = 0;
@@ -10,7 +10,7 @@ $(document).ready(function() {
   
   var booksTable = $('.books');
 
-  var buttonsBook = "<div class=\"buttons\"><button class=\"btn btn-secondary btn-sm dropdown-toggle button-add-copy\" type=\"button\" id=\"dropdownMenuButtonCopy\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"false\">Add copy </button><div class=\"dropdown-menu\" aria-labelledby=\"dropdownMenuButtonCopy\"><div class=\"form-group\"><label for=\"inventoryNumber\">Inventory number</label><input type=\"text\" class=\"form-control\" id=\"inventoryNumber\" placeholder=\"Inventory number\"></div></div><div class=\"dropdown\"><button class=\"btn btn-secondary btn-sm dropdown-toggle select-reader\" type=\"button\" id=\"dropdownMenuButtonReader\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"false\">Select reader</button><div class=\"dropdown-menu\" aria-labelledby\"dropdownMenuButtonSelectReader\"><a class=\"dropdown-item\" href=\"#\">Jan Nowak</a><a class=\"dropdown-item\" href=\"#\">Adam Kowalski</a><a class=\"dropdown-item\" href=\"#\">Monika Malinowska</a></div></div><button class=\"btn btn-secondary btn-sm delete-book-button\">Delete book</button></div>";
+  var buttonsBook = "<div class=\"buttons\"><button class=\"btn btn-secondary btn-sm dropdown-toggle button-add-copy\" type=\"button\" id=\"dropdownMenuButtonCopy\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"false\">Add copy </button><div class=\"dropdown-menu\" aria-labelledby=\"dropdownMenuButtonCopy\"><div class=\"form-group\"><label for=\"inventoryNumber\">Inventory number</label><input type=\"text\" class=\"form-control\" id=\"inventoryNumber\" placeholder=\"Inventory number\"><button class=\"btn btn-secondary btn-sm save-copy\">Save</button></div></div><div class=\"dropdown\"><button class=\"btn btn-secondary btn-sm dropdown-toggle select-reader\" type=\"button\" id=\"dropdownMenuButtonReader\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"false\">Select reader</button><div class=\"dropdown-menu\" aria-labelledby\"dropdownMenuButtonSelectReader\"><a class=\"dropdown-item\" href=\"#\">Jan Nowak</a><a class=\"dropdown-item\" href=\"#\">Adam Kowalski</a><a class=\"dropdown-item\" href=\"#\">Monika Malinowska</a></div></div><button class=\"btn btn-secondary btn-sm delete-book-button\">Delete book</button></div>";
 
   var buttonsReader = "<div class=\"buttons\"><button class=\"btn btn-secondary btn-sm dropdown-toggle\" type=\"button\" id=\"dropdownMenuButton\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"false\">Edit</button><div class=\"dropdown-menu\" aria-labelledby=\"dropdownMenuButton\"><div class=\"form-group\"><label for=\"exampleDropdownFormEmail2\">First Name</label><input type=\"text\" class=\"form-control\" id=\"exampleDropdownFormEmail2\" placeholder=\"First name\"></div><div class=\"form-group\"><label for=\"exampleDropdownFormEmail2\">Last Name</label><input type=\"text\" class=\"form-control\" id=\"exampleDropdownFormEmail2\" placeholder=\"Last name\"></div><div class=\"form-group\"><label for=\"exampleDropdownFormEmail2\">Birth date</label><input type=\"text\" class=\"form-control\" id=\"exampleDropdownFormEmail2\" placeholder=\"Birth date\"></div><div class=\"button btn-secondary btn-sm\">Submit</div></div><!--RETURN COPY OF BOOK--><div class=\"dropdown\"><button class=\"btn btn-secondary btn-sm dropdown-toggle\" type=\"button\" id=\"return-copy\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"false\">Return copy</button><div class=\"dropdown-menu\" aria-labelledby=\"return-copy\"><a class=\"dropdown-item\" href=\"#\">353475</a></div></div><button class=\"btn btn-secondary btn-sm delete-reader-button\">Delete reader</button></div>";
 
@@ -149,8 +149,6 @@ $(document).ready(function() {
       var date = $("#birth-date").val();
       console.log(date);
 
-        //alert(readerFirstName + " " + readerLastName + " "  + readerEmail + " " + date);
-
 
         $.ajax({
           url: apiRoot + "createReader",
@@ -193,6 +191,40 @@ $(document).ready(function() {
    });
   }
   deleteReaderRequest();
+
+  //COPY
+  function createCopyRequest(){
+    $(document).on("click", ".save-copy",function(){
+        var invNum = $("#inventoryNumber").val();
+        var selectedBookId = $(this).closest("tr").find('.bookIdTd').html();
+        var wholeRow = $(this).closest("tr");
+
+        const requestUrl = apiRoot + 'createCopy?' + $.param({
+          bookId: selectedBookId
+        });
+        console.log(requestUrl);
+
+        $.ajax({
+          url: requestUrl,
+          type: 'POST',
+          contentType: "application/json; charset=utf-8",
+          dataType: 'json',
+          data: JSON.stringify({
+          inventoryNumber: invNum
+          }),
+          complete: function(data) {
+          if(data.status === 200) {
+            location.reload();
+          }
+         }
+        });
+        
+        console.log("Log: " + invNum + " " + selectedBookId);
+    });
+    
+  }
+
+  createCopyRequest();
 
 
 });
