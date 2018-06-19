@@ -1,8 +1,8 @@
 
 $(document).ready(function() {
 	console.log( "ready!" );
-	const apiRoot = 'http://localhost:8080/restLibrary/';
-  //const apiRoot = 'https://sheltered-scrubland-57989.herokuapp.com/restLibrary/';
+	//const apiRoot = 'http://localhost:8080/restLibrary/';
+  const apiRoot = 'https://sheltered-scrubland-57989.herokuapp.com/restLibrary/';
   var availableBooks = {};
   var booksAmount = 0;
   var readersAmount = 0;
@@ -10,51 +10,55 @@ $(document).ready(function() {
   
   var booksTable = $('.books');
 
-  var buttonsBook = "<div class=\"buttons\"><button class=\"btn btn-secondary btn-sm dropdown-toggle button-add-copy\" type=\"button\" id=\"dropdownMenuButtonCopy\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"false\">Add copy</button><div class=\"dropdown-menu\" aria-labelledby=\"dropdownMenuButtonCopy\"><div class=\"form-group\"><label for=\"inventoryNumber\">Inventory number</label><input type=\"text\" class=\"form-control\" id=\"inventoryNumber\" placeholder=\"Inventory number\"><button class=\"btn btn-secondary btn-sm save-copy\">Save</button></div></div><div class=\"dropdown\"><button class=\"btn btn-secondary btn-sm dropdown-toggle select-reader\" type=\"button\" id=\"dropdownMenuButtonReader\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"false\">Select reader</button><div class=\"dropdown-menu readers-list\" aria-labelledby=\"dropdownMenuButtonReader\">No readers</div></div><button class=\"btn btn-secondary btn-sm delete-book-button\">Delete book</button></div>"
+  var buttonsBook = '<div class=\"buttons\"> <button type="button" class="btn btn-secondary btn-sm add-copy" data-toggle="modal" data-target="#add-copy">Add copy</button><!-- Modal --><div class="modal fade" id="add-copy" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"><div class="modal-dialog" role="document"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="exampleModalLabel">Add copy</h5><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button></div><div class="modal-body"><form><div class="form-group"><label for="insert-inventory-num" class="col-form-label">Inventory number:</label><input type="text" class="form-control" id="insert-inventory-num"></div></form></div><div class="modal-footer"><button type="button" class="btn btn-secondary close-add-copy" data-dismiss="modal">Close</button><button type="button" class="btn btn-secondary save-add-copy">Save changes</button></div></div></div></div><div class=\"dropdown\"><button class=\"btn btn-secondary btn-sm dropdown-toggle select-reader\" type=\"button\" id=\"dropdownMenuButtonReader\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"false\">Select reader</button><div class=\"dropdown-menu readers-list\" aria-labelledby=\"dropdownMenuButtonReader\">No readers</div></div><button class=\"btn btn-secondary btn-sm delete-book-button\">Delete book</button></div>';
 
-  var buttonsReader = '<div class="buttons"><button type="button" class="btn btn-secondary btn-sm edit-reader" data-toggle="modal" data-target="#exampleModal">Edit</button><div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"><div class="modal-dialog" role="document"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="edit-reader">Edit reader</h5><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button></div><div class="modal-body"><form><div class="form-group"><label for="reader-first-name-update" class="col-form-label">First name</label><input type="text" class="form-control" id="reader-first-name-update"></div><div class="form-group"><label for="reader-last-name-update" class="col-form-label">Last name</label><input type="text" class="form-control" id="reader-last-name-update"></input></div><div class="form-group"><label for="birth-date-update" class="col-3 col-form-label">Birth date</label><input class="form-control" type="date" placeholder="Birth date" id="birth-date-update"></div><div class="form-group"><label for="reader-email-update" class="col-form-label">Email</label><input type="email" class="form-control" id="reader-email-update"></input></div></form></div><div class="modal-footer"><button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button><button type="button" class="btn btn-primary save-changes">Save</button></div></div></div></div><!--RETURN COPY OF BOOK--><div class = "dropdown"><button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="return-copy" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Return copy</button><div class="dropdown-menu" aria-labelledby="return-copy"><a class="dropdown-item" href="#">353475</a></div></div><button class="btn btn-secondary btn-sm delete-reader-button">Delete reader</button></div>';
 
-  getAllBooks();
-  getAllReaders();
 
-  function getAllBooks(){
-    const requestUrl = apiRoot + 'getBooks';
+//<button class=\"btn btn-secondary btn-sm dropdown-toggle button-add-copy\" type=\"button\" id=\"dropdownMenuButtonCopy\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"false\">Add copy</button><div class=\"dropdown-menu\" aria-labelledby=\"dropdownMenuButtonCopy\"><div class=\"form-group\"><label for=\"inventoryNumber\">Inventory number</label><input type=\"text\" class=\"form-control inv-num\" id=\"inventoryNumber\" placeholder=\"Inventory number\"><button class=\"btn btn-secondary btn-sm save-copy\">Save</button></div></div>
 
-    $.ajax({
-     url: requestUrl,
-     method: 'GET',
-     contentType: "application/json",
-     success: function(books){
 
-      console.log(books);
-      booksAmount = books.length;
-      console.log("Books amount: " + booksAmount);
+var buttonsReader = '<div class="buttons"><button type="button" class="btn btn-secondary btn-sm edit-reader" data-toggle="modal" data-target="#exampleModal">Edit</button><div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"><div class="modal-dialog" role="document"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="edit-reader">Edit reader</h5><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button></div><div class="modal-body"><form><div class="form-group"><label for="reader-first-name-update" class="col-form-label">First name</label><input type="text" class="form-control" id="reader-first-name-update"></div><div class="form-group"><label for="reader-last-name-update" class="col-form-label">Last name</label><input type="text" class="form-control" id="reader-last-name-update"></input></div><div class="form-group"><label for="birth-date-update" class="col-3 col-form-label">Birth date</label><input class="form-control" type="date" placeholder="Birth date" id="birth-date-update"></div><div class="form-group"><label for="reader-email-update" class="col-form-label">Email</label><input type="email" class="form-control" id="reader-email-update"></input></div></form></div><div class="modal-footer"><button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button><button type="button" class="btn btn-primary save-changes">Save</button></div></div></div></div><!--RETURN COPY OF BOOK--><div class = "dropdown"><button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="return-copy" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Return copy</button><div class="dropdown-menu" aria-labelledby="return-copy"><a class="dropdown-item" href="#">353475</a></div></div><button class="btn btn-secondary btn-sm delete-reader-button">Delete reader</button></div>';
 
-      generateBookTable(books);
-    }
-  });
+getAllBooks();
+getAllReaders();
 
-    console.log(availableBooks);
+function getAllBooks(){
+  const requestUrl = apiRoot + 'getBooks';
+
+  $.ajax({
+   url: requestUrl,
+   method: 'GET',
+   contentType: "application/json",
+   success: function(books){
+
+    console.log(books);
+    booksAmount = books.length;
+    console.log("Books amount: " + booksAmount);
+
+    generateBookTable(books);
   }
+});
 
-  function generateBookTable(receivedBooks){
+  console.log(availableBooks);
+}
 
-    for(var i = 0; i<receivedBooks.length; i++){
-     var result = "";
-     result += "<tr><td class =\"bookIdTd\">" + receivedBooks[i].id + "</td>";
-     result += "<td class = \"bookTitleTd\">" + receivedBooks[i].title + "</td>";
-     result += "<td class = \"bookAuthorTd\">" + receivedBooks[i].author + "</td>";
-     result += "<td class = \"bookYearTd\">" + receivedBooks[i].releaseYear + "</td>";
-     result += "<td class = \"bookIsbnTd\">" + receivedBooks[i].isbn + "</td>";
-     result += "<td class = \"bookCopiesTd\">" + receivedBooks[i].copies.length + "</td>";
-     result += "<td>" + buttonsBook + "</td></tr>";
-     $(".books").append(result);
+function generateBookTable(receivedBooks){
 
-   }
+  for(var i = 0; i<receivedBooks.length; i++){
+   var result = "";
+   result += "<tr><td class =\"bookIdTd\">" + receivedBooks[i].id + "</td>";
+   result += "<td class = \"bookTitleTd\">" + receivedBooks[i].title + "</td>";
+   result += "<td class = \"bookAuthorTd\">" + receivedBooks[i].author + "</td>";
+   result += "<td class = \"bookYearTd\">" + receivedBooks[i].releaseYear + "</td>";
+   result += "<td class = \"bookIsbnTd\">" + receivedBooks[i].isbn + "</td>";
+   result += "<td class = \"bookCopiesTd\">" + receivedBooks[i].copies.length + "</td>";
+   result += "<td>" + buttonsBook + "</td></tr>";
+   $(".books").append(result);
+
  }
+}
 
- function generateBookRequest(){
-
+function generateBookRequest(){
   $("#create-book").on("click", function(){
     var bookAuthor = $("#author").val();
     var bookTitle = $("#title").val();
@@ -194,37 +198,36 @@ deleteReaderRequest();
 
   //COPY
   function createCopyRequest(){
-    $(document).on("click", ".save-copy", function(){
-      var invNum = $("#inventoryNumber").val();
-      var selectedBookId = $(this).closest("tr").find('.bookIdTd').html();
-      var wholeRow = $(this).closest("tr");
-      console.log(invNum + "<--- invnum");
-
-      const requestUrl = apiRoot + 'createCopy?' + $.param({
-        bookId: selectedBookId
-      });
-
+    const requestUrl = apiRoot + "createCopy";
+    $(document).on("click", ".add-copy", function(){
       console.log(requestUrl);
-
-      $.ajax({
-        url: requestUrl,
-        type: 'POST',
-        contentType: "application/json; charset=utf-8",
-        dataType: 'json',
-        data: JSON.stringify({
-          inventoryNumber: invNum
-        }),
-        complete: function(data) {
-
-          if(data.status === 200) {
-            location.reload();
+      console.log("clicked");
+      var selectedBookId = $(this).closest("tr").find(".bookIdTd").html();
+      console.log(selectedBookId);
+      $(".save-add-copy").on("click", function(){
+        console.log("save click");
+        var inventoryNumber = $("#insert-inventory-num").val();
+        console.log(inventoryNumber);
+//do something with values after using close button!! it adds two values in the next time!!
+$.ajax({
+  url: requestUrl + "?" + $.param({bookId: selectedBookId}),
+  type: 'POST',
+  contentType: "application/json; charset=utf-8",
+  dataType: 'json',
+  data: JSON.stringify({
+    inventoryNumber: inventoryNumber
+  }),
+  complete: function(data) {
+    if(data.status === 200) {
+      location.reload();
+            // $(".books").remove();
+            // getAllBooks();
           }
         }
       });
+});
     });
-    
   }
-
   createCopyRequest();
 
   function listReadersInDropdownRequest(){
@@ -247,10 +250,9 @@ deleteReaderRequest();
     $(document).on("click", ".select-reader", function(){
       var result = "";
       for(i = 0; i<receivedReaders.length; i++){
-        result += "<a class=\"dropdown-item\">" + receivedReaders[i].firstName + " " + receivedReaders[i].lastName +  "</a>";
-        console.log("adding " + receivedReaders[i].firstName + " " + receivedReaders[i].lastName);
+        result += "<a class=\"dropdown-item reader-item\">" + "<span class=\"selected-reader-id\">" + receivedReaders[i].id + " " + "</span>" + receivedReaders[i].firstName + " " + receivedReaders[i].lastName +"</a>";
+        console.log("adding " + receivedReaders[i].id + " "  + receivedReaders[i].firstName + " " + receivedReaders[i].lastName);
         $(".readers-list").html(result);
-        //dlaczego dodawal razy to samo?
       }
     });
   }
@@ -299,12 +301,45 @@ deleteReaderRequest();
   }
 
   updateReaderRequest();
+
+  function createBorrowRequest(){
+    requestUrl = apiRoot + "createBorrow";
+
+    $(document).on("click", ".select-reader", function(){
+      console.log("im am going to create borrow");
+      var selectedBookId = $(this).closest("tr").find('.bookIdTd').html();
+      console.log("book id: " + selectedBookId);
+
+      $(document).on("click", ".reader-item", function(){
+        //var reader = $(this).text();
+        var selectedReaderId = $(".selected-reader-id", this).text();
+        console.log(selectedReaderId);
+
+        $.ajax({
+          url: requestUrl + "?" + $.param({bookId: selectedBookId}) + "&" + $.param({readerId: selectedReaderId}),
+          type: 'POST',
+          success: function(data) {
+            //if(data.status === 200) {
+              console.log('OK');
+             //location.reload();
+         // } 
+          // else{
+          //     alert("Cannot create borrow propably there are no copies available");
+          // }
+        },
+        error: function(jqXHR, textStatus, errorThrown){
+          console.log(jqXHR.responseJSON.message);//when I use alert and click ok i have strange ok answer from success:function()
+        }
+      });
+      });
+    });
+
+
+  }
+  createBorrowRequest();
+
+
 });
 
-//tyle wierszy w tabelce ile mamy danych (pustych) generujemy (link)
-//zwykły stream z danymi z serwera
-//utworzenie książki
-//utworzenie readera
-//przyciski na koniec przy książce 
 
 

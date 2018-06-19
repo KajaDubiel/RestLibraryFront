@@ -106,64 +106,20 @@
             <td class = "bookIsbnTd">ISBN</td>
             <td class = "bookCopiesTd">COPIES</td>
             <td>
-              
+
               <div class="buttons">
 
-                <button class="btn btn-secondary btn-sm dropdown-toggle button-add-copy" type="button" id="dropdownMenuButtonCopy" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  Add copy
-                </button>
-                <div class="dropdown-menu" aria-labelledby="dropdownMenuButtonCopy">
-                  <div class="form-group">
-                    <label for="inventoryNumber">Inventory number</label>
-                    <input type="text" class="form-control" id="inventoryNumber" placeholder="Inventory number">
-                    <button class="btn btn-secondary btn-sm save-copy">Save</button>
-                  </div>
-                </div>
 
-                <div class="dropdown">
-                  <button class="btn btn-secondary btn-sm dropdown-toggle select-reader" type="button" id="dropdownMenuButtonReader" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Select reader
-                  </button>
-                  <div class="dropdown-menu readers-list" aria-labelledby="dropdownMenuButtonReader">
-                     <a class="dropdown-item" href="#">No readers</a>
-                  </div>
-                </div>
+               <!---<button type="button" class="btn btn-secondary btn-sm add-copy" data-toggle="modal" data-target="#add-copy">
+                Add copy
+              </button>-->
 
-                <button class="btn btn-secondary btn-sm delete-book-button">Delete book</button>
-              </div>
-            </td>
-          </tr>
-        </table>
-      </div>     
-    </div>
-
-    <!--PANEL WITH READERS-->
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h3>Readers</h3>
-      </div>
-
-      <div class="panel-body">
-
-        <table class="table table-stripped readers">
-          <tr>
-            <td class="readerId">ID</td>
-            <td class="readerFirstName">FIRST NAME</td>
-            <td class="readerLastName">LAST NAME</td>
-            <td class="readerEmail">EMAIL</td>
-            <td class="readerBirthDate">BIRTH DATE</td>
-            <td class="readerBorrows">BORROWS</td>
-
-            <!--old buttons-->
-            <td>
-              <div class="buttons">
-                <button type="button" class="btn btn-secondary btn-sm" data-toggle="modal" data-target="#exampleModal">Edit</button>
-
-              <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+              <!-- Modal -->
+              <!--<div class="modal fade" id="add-copy" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog" role="document">
                   <div class="modal-content">
                     <div class="modal-header">
-                      <h5 class="modal-title" id="edit-reader">Edit reader</h5>
+                      <h5 class="modal-title" id="exampleModalLabel">Add copy</h5>
                       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                       </button>
@@ -171,59 +127,124 @@
                     <div class="modal-body">
                       <form>
                         <div class="form-group">
-                          <label for="reader-first-name-update" class="col-form-label">First name</label>
-                          <input type="text" class="form-control" id="reader-first-name-update">
-                        </div>
-                        <div class="form-group">
-                          <label for="reader-last-name-update" class="col-form-label">Last name</label>
-                          <input type="text" class="form-control" id="reader-last-name-update"></input>
-                        </div>
-                        <div class="form-group">
-                          <label for="birth-date-update" class="col-3 col-form-label">Birth date</label>
-                          <input class="form-control" type="date" placeholder="Birth date" id="birth-date-update">
-                        </div>
-                        <div class="form-group">
-                          <label for="reader-email-update" class="col-form-label">Email</label>
-                          <input type="email" class="form-control" id="reader-email-update"></input>
+                          <label for="insert-inventory-num" class="col-form-label">Inventory number:</label>
+                          <input type="text" class="form-control" id="insert-inventory-num">
                         </div>
                       </form>
                     </div>
                     <div class="modal-footer">
-                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                      <button type="button" class="btn btn-primary save-changes">Save</button>
+                      <button type="button" class="btn btn-secondary close-add-copy" data-dismiss="modal">Close</button>
+                      <button type="button" class="btn btn-secondary save-add-copy">Save changes</button>
                     </div>
                   </div>
                 </div>
               </div>
 
-                <!--RETURN COPY OF BOOK-->
-                <div class = "dropdown">
-                  <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="return-copy" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Return copy
-                  </button>
-                  <div class="dropdown-menu" aria-labelledby="return-copy">
-                    <a class="dropdown-item" href="#">353475</a>
-                  </div>
-                </div>
+              <div class="dropdown">
+                <button class="btn btn-secondary btn-sm dropdown-toggle select-reader" type="button" id="dropdownMenuButtonReader" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Select reader
+                </button>
+                <div class="dropdown-menu readers-list" aria-labelledby="dropdownMenuButtonReader">
+                 <a class="dropdown-item" href="#">No readers</a>
+               </div>
+             </div>
 
-                <button class="btn btn-secondary btn-sm delete-reader-button">Delete reader</button>
-              </div></td>
-            <!--trial with modal-->
-          
-          </tr>
+             <button class="btn btn-secondary btn-sm delete-book-button">Delete book</button>-->
+           </div>
+         </td>
+       </tr>
+     </table>
+   </div>     
+ </div>
 
-        </table>
-      </div>  
-    </div>
-
+ <!--PANEL WITH READERS-->
+ <div class="panel panel-default">
+  <div class="panel-heading">
+    <h3>Readers</h3>
   </div>
 
-  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-  <!-- <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script> -->
-  <script src="resources/jquery-3.3.1.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
-  <!-- Optional JavaScript -->
-  <script src="resources/script.js"></script>
+  <div class="panel-body">
+
+    <table class="table table-stripped readers">
+      <tr>
+        <td class="readerId">ID</td>
+        <td class="readerFirstName">FIRST NAME</td>
+        <td class="readerLastName">LAST NAME</td>
+        <td class="readerEmail">EMAIL</td>
+        <td class="readerBirthDate">BIRTH DATE</td>
+        <td class="readerBorrows">BORROWS</td>
+
+        <!--old buttons-->
+        <td>
+          <div class="buttons">
+
+            <!--<button type="button" class="btn btn-secondary btn-sm edit-reader" data-toggle="modal" data-target="#exampleModal">Edit</button>
+
+            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="edit-reader">Edit reader</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    <form>
+                      <div class="form-group">
+                        <label for="reader-first-name-update" class="col-form-label">First name</label>
+                        <input type="text" class="form-control" id="reader-first-name-update">
+                      </div>
+                      <div class="form-group">
+                        <label for="reader-last-name-update" class="col-form-label">Last name</label>
+                        <input type="text" class="form-control" id="reader-last-name-update"></input>
+                      </div>
+                      <div class="form-group">
+                        <label for="birth-date-update" class="col-3 col-form-label">Birth date</label>
+                        <input class="form-control" type="date" placeholder="Birth date" id="birth-date-update">
+                      </div>
+                      <div class="form-group">
+                        <label for="reader-email-update" class="col-form-label">Email</label>
+                        <input type="email" class="form-control" id="reader-email-update"></input>
+                      </div>
+                    </form>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary save-changes">Save</button>
+                  </div>
+                </div>
+              </div>
+            </div>-->
+
+            <!--RETURN COPY OF BOOK-->
+            <!--<div class = "dropdown">
+              <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="return-copy" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Return copy
+              </button>
+              <div class="dropdown-menu" aria-labelledby="return-copy">
+                <a class="dropdown-item" href="#">353475</a>
+              </div>
+            </div>
+
+            <button class="btn btn-secondary btn-sm delete-reader-button">Delete reader</button>-->
+          </div></td>
+          <!--trial with modal-->
+          
+        </tr>
+
+      </table>
+    </div>  
+  </div>
+
+</div>
+
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<!-- <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script> -->
+<script src="resources/jquery-3.3.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
+<!-- Optional JavaScript -->
+<script src="resources/script.js"></script>
 </body>
 </html>

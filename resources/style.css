@@ -2,12 +2,12 @@ body{
 	
 	background-color: white;
 	background: linear-gradient(
-                       rgba(255, 255, 255, 0.3),
-                       rgba(255, 255, 255, 0.3)),
-                       url('img/70medium.jpg');
-  background-repeat: repeat;
-/*background-attachment: fixed;*/
-  
+		rgba(255, 255, 255, 0.3),
+		rgba(255, 255, 255, 0.3)),
+	url('img/70medium.jpg');
+	background-repeat: repeat;
+	/*background-attachment: fixed;*/
+	
 }
 
 h1, h2, h3, h6{
@@ -67,8 +67,8 @@ h6{
 
 .btn{
 	background: linear-gradient(#6d0361 , 
-#9e4794
-);
+		#9e4794
+		);
 	//background-color: #AB8A1F;
 	border: none;
 	margin: 0;
@@ -76,8 +76,8 @@ h6{
 
 .btn:hover{
 	background: linear-gradient(#5c0250 , 
-#8d3683
-);
+		#8d3683
+		);
 } 
 
 .buttons{
@@ -93,13 +93,11 @@ h6{
 }
 
 .dropdown-menu:hover{
-  cursor: pointer;
+	cursor: pointer;
 }
 
 .save-reader-changes{
 	border: solid yellow;
 }
-
-
 
 
