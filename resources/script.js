@@ -17,7 +17,7 @@ $(document).ready(function() {
 //<button class=\"btn btn-secondary btn-sm dropdown-toggle button-add-copy\" type=\"button\" id=\"dropdownMenuButtonCopy\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"false\">Add copy</button><div class=\"dropdown-menu\" aria-labelledby=\"dropdownMenuButtonCopy\"><div class=\"form-group\"><label for=\"inventoryNumber\">Inventory number</label><input type=\"text\" class=\"form-control inv-num\" id=\"inventoryNumber\" placeholder=\"Inventory number\"><button class=\"btn btn-secondary btn-sm save-copy\">Save</button></div></div>
 
 
-var buttonsReader = '<div class="buttons"><button type="button" class="btn btn-secondary btn-sm edit-reader" data-toggle="modal" data-target="#exampleModal">Edit</button><div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"><div class="modal-dialog" role="document"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="edit-reader">Edit reader</h5><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button></div><div class="modal-body"><form><div class="form-group"><label for="reader-first-name-update" class="col-form-label">First name</label><input type="text" class="form-control" id="reader-first-name-update"></div><div class="form-group"><label for="reader-last-name-update" class="col-form-label">Last name</label><input type="text" class="form-control" id="reader-last-name-update"></input></div><div class="form-group"><label for="birth-date-update" class="col-3 col-form-label">Birth date</label><input class="form-control" type="date" placeholder="Birth date" id="birth-date-update"></div><div class="form-group"><label for="reader-email-update" class="col-form-label">Email</label><input type="email" class="form-control" id="reader-email-update"></input></div></form></div><div class="modal-footer"><button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button><button type="button" class="btn btn-primary save-changes">Save</button></div></div></div></div><!--RETURN COPY OF BOOK--><div class = "dropdown"><button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="return-copy" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Return copy</button><div class="dropdown-menu" aria-labelledby="return-copy"><a class="dropdown-item" href="#">353475</a></div></div><button class="btn btn-secondary btn-sm delete-reader-button">Delete reader</button></div>';
+var buttonsReader = '<div class="buttons"><button type="button" class="btn btn-secondary btn-sm edit-reader" data-toggle="modal" data-target="#exampleModal">Edit</button><div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"><div class="modal-dialog" role="document"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="edit-reader">Edit reader</h5><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button></div><div class="modal-body"><form><div class="form-group"><label for="reader-first-name-update" class="col-form-label">First name</label><input type="text" class="form-control" id="reader-first-name-update"></div><div class="form-group"><label for="reader-last-name-update" class="col-form-label">Last name</label><input type="text" class="form-control" id="reader-last-name-update"></input></div><div class="form-group"><label for="birth-date-update" class="col-3 col-form-label">Birth date</label><input class="form-control" type="date" placeholder="Birth date" id="birth-date-update"></div><div class="form-group"><label for="reader-email-update" class="col-form-label">Email</label><input type="email" class="form-control" id="reader-email-update"></input></div></form></div><div class="modal-footer"><button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button><button type="button" class="btn btn-primary save-changes">Save</button></div></div></div></div><!--RETURN COPY OF BOOK--><div class = "dropdown"><button class="btn btn-secondary btn-sm dropdown-toggle return-copy" type="button" id="return-copy" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Return copy</button><div class="dropdown-menu copies-list" aria-labelledby="return-copy"><a class="dropdown-item borrowed-copy" href="#">No copies</a></div></div><button class="btn btn-secondary btn-sm delete-reader-button">Delete reader</button></div>';
 
 getAllBooks();
 getAllReaders();
@@ -100,8 +100,11 @@ function deleteBookRequest(){
         success: function() {
          correct: $(this).closest("tr").remove();
          location.reload();
-       }
-     });
+       },
+       error: function(jqXHR, textStatus, errorThrown){
+          alert(jqXHR.responseJSON.message);//when I use alert and click ok i have strange ok answer from 
+        }
+      });
     });
 }
 deleteBookRequest();
@@ -134,10 +137,20 @@ function generateReadersTable(receivedReaders){
    result += "<td class = \"readerLastName\">" + receivedReaders[i].lastName + "</td>";
    result += "<td class = \"readerEmail\">" + receivedReaders[i].readerEmail + "</td>";
    result += "<td class = \"readerBirthDate\">" + receivedReaders[i].birthDate + "</td>";
-   result += "<td class = \"readerBorrows\">" + receivedReaders[i].borrows.length + "</td>";
+   var borrowsAmount = receivedReaders[i].borrows.length;
+   var countActiveBorrows = 0;
+   for(j=0; j<borrowsAmount; j++){
+    if(receivedReaders[i].borrows[j].untilDate!==null){
+      countActiveBorrows++;
+      console.log(receivedReaders[i].borrows[j].untilDate + " countActiveBorrows:" + countActiveBorrows);
+    }
+  }
+
+  result += "<td class = \"readerBorrows\">" + countActiveBorrows + "</td>";
+
+   //result += "<td class = \"readerBorrows\">" + receivedReaders[i].borrows.length + "</td>";
    result += "<td>" + buttonsReader + "</td></tr>";
    $(".readers").append(result);
-
  }
 }
 
@@ -190,6 +203,8 @@ function deleteReaderRequest(){
         success: function() {
           correct: $(this).closest("tr").remove();
           location.reload();
+        },error: function(jqXHR, textStatus, errorThrown){
+          alert(jqXHR.responseJSON.message);//when I use alert and click ok i have strange ok answer from 
         }
       });
     });
@@ -199,14 +214,22 @@ deleteReaderRequest();
   //COPY
   function createCopyRequest(){
     const requestUrl = apiRoot + "createCopy";
+    var selectedBookId=0;
     $(document).on("click", ".add-copy", function(){
       console.log(requestUrl);
       console.log("clicked");
-      var selectedBookId = $(this).closest("tr").find(".bookIdTd").html();
+      selectedBookId = $(this).closest("tr").find(".bookIdTd").html();
       console.log(selectedBookId);
-      $(".save-add-copy").on("click", function(){
+      });
+
+    $(document).on("click", ".close-add-copy", function(){
+        $("#insert-inventory-num").val("");
+    });
+
+      $(document).on("click", ".save-add-copy", function(){
+        var inventoryNumber = "";
         console.log("save click");
-        var inventoryNumber = $("#insert-inventory-num").val();
+        inventoryNumber = $("#insert-inventory-num").val();
         console.log(inventoryNumber);
 //do something with values after using close button!! it adds two values in the next time!!
 $.ajax({
@@ -220,17 +243,15 @@ $.ajax({
   complete: function(data) {
     if(data.status === 200) {
       location.reload();
-            // $(".books").remove();
-            // getAllBooks();
-          }
-        }
-      });
+    }
+  }
 });
-    });
+});
+    
   }
   createCopyRequest();
 
-  function listReadersInDropdownRequest(){
+  function listReadersInDropdownRequest(){//moze to powinna być jedna funkcja? :)
     const requestUrl = apiRoot + 'getReaders';
 
     $.ajax({
@@ -302,44 +323,130 @@ $.ajax({
 
   updateReaderRequest();
 
-  function createBorrowRequest(){
-    requestUrl = apiRoot + "createBorrow";
 
-    $(document).on("click", ".select-reader", function(){
-      console.log("im am going to create borrow");
-      var selectedBookId = $(this).closest("tr").find('.bookIdTd').html();
-      console.log("book id: " + selectedBookId);
+//SELECT READER BUTTON
+function createBorrowRequest(){
+  requestUrl = apiRoot + "createBorrow";
+  var selectedBookId="";
 
-      $(document).on("click", ".reader-item", function(){
-        //var reader = $(this).text();
-        var selectedReaderId = $(".selected-reader-id", this).text();
-        console.log(selectedReaderId);
+  $(document).on("click", ".select-reader", function(){
+    console.log("im am going to create borrow");
+    selectedBookId = $(this).closest("tr").find('.bookIdTd').html();
+    console.log("book id: " + selectedBookId);
+  });
 
-        $.ajax({
-          url: requestUrl + "?" + $.param({bookId: selectedBookId}) + "&" + $.param({readerId: selectedReaderId}),
-          type: 'POST',
-          success: function(data) {
-            //if(data.status === 200) {
-              console.log('OK');
-             //location.reload();
-         // } 
-          // else{
-          //     alert("Cannot create borrow propably there are no copies available");
-          // }
-        },
-        error: function(jqXHR, textStatus, errorThrown){
-          console.log(jqXHR.responseJSON.message);//when I use alert and click ok i have strange ok answer from success:function()
+  $(document).on("click", ".reader-item", function(){
+    var selectedReaderId = $(".selected-reader-id", this).text();
+    console.log("reader: " + selectedReaderId + " book: " + selectedBookId);
+
+//add some condition when 0 copies
+$.ajax({
+  url: requestUrl + "?" + $.param({bookId: selectedBookId}) + "&" + $.param({readerId: selectedReaderId}),
+  type: 'POST',
+  success: function(data) {
+    console.log('OK');
+    location.reload();
+  },
+  error: function(jqXHR, textStatus, errorThrown){
+          alert(jqXHR.responseJSON.message);//when I use alert and click ok i have strange ok answer from success:function()
         }
       });
-      });
-    });
-
-
-  }
-  createBorrowRequest();
-
-
 });
 
 
 
+}
+createBorrowRequest();
+
+function listBorrowedCopiesInDropdownRequest(){
+
+  const requestUrl = apiRoot + 'getBorrowedCopies';
+  $(document).on("click", ".return-copy", function(){
+    console.log("return clickedd");
+    var readerId = $(this).closest("tr").find(".readerId").html();
+        //zrób listę kopiii
+
+        $.ajax({
+          url: requestUrl + "?" + $.param({readerId: readerId}),
+          method: 'GET',
+          contentType: "application/json",
+          success: function(copies){
+            console.log(copies);
+            var copiesAmount = copies.length;
+            console.log("Borrowed copies amount: " + copiesAmount);
+
+            listBorrowedCopiesInDropdown(copies);
+
+          }
+        });
+
+      });
+
+}
+
+listBorrowedCopiesInDropdownRequest();
+
+function listBorrowedCopiesInDropdown(copies){
+  var result = "";
+  for(i = 0; i<copies.length; i++){
+    console.log("Listing copy with id: " + copies[i].inventoryNumber + "and inventoryNumber = " + copies[i].inventoryNumber);
+    result += "<a class=\"dropdown-item borrowed-copy\" href=\"#\">" + copies[i].inventoryNumber +  " " + copies[i].book.title + "</a>"
+    $(".copies-list").html(result);
+  } 
+}
+
+function returnBorrowedCopyRequest(){
+  var selectedReaderId = "";
+  const requestUrl = apiRoot + 'returnBorrow?';
+  $(document).on("click", ".return-copy", function(){
+    console.log("im am going to return borrow");
+    selectedReaderId = $(this).closest("tr").find('.readerId').html();
+    console.log(selectedReaderId);
+  });
+
+  $(document).on("click", ".borrowed-copy", function(){
+    var selectedCopyInventoryNumber = $(this).text();
+    console.log(selectedCopyInventoryNumber);
+
+    $.ajax({
+      url: requestUrl + $.param({readerId: selectedReaderId}) + "&" + $.param({inventoryNumber: selectedCopyInventoryNumber}),
+      method: "PUT",
+      success: function(data){
+        console.log("OK!!!!");
+        location.reload();
+      },
+      error: function(){
+        console.log("There are no copies to return");
+      }
+
+    })
+  });
+
+      ///
+      // $(document).on("click", ".reader-item", function(){
+      //   var selectedReaderId = $(".selected-reader-id", this).text();
+      //   console.log(selectedReaderId);
+
+      //   $.ajax({
+      //     url: requestUrl + "?" + $.param({bookId: selectedBookId}) + "&" + $.param({readerId: selectedReaderId}),
+      //     type: 'POST',
+      //     success: function(data) {
+      //       //if(data.status === 200) {
+      //         console.log('OK');
+      //        //location.reload();
+      //    // } 
+      //     // else{
+      //     //     alert("Cannot create borrow propably there are no copies available");
+      //     // }
+      //   },
+      //   error: function(jqXHR, textStatus, errorThrown){
+      //     console.log(jqXHR.responseJSON.message);//when I use alert and click ok i have strange ok answer from success:function()
+      //   }
+
+    }
+    returnBorrowedCopyRequest()
+
+  });
+
+
+//list copies unique & choose copy and return
