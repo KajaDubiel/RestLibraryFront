@@ -1,13 +1,10 @@
 body{
-	
 	background-color: white;
 	background: linear-gradient(
 		rgba(255, 255, 255, 0.3),
 		rgba(255, 255, 255, 0.3)),
 	url('img/70medium.jpg');
 	background-repeat: repeat;
-	/*background-attachment: fixed;*/
-	
 }
 
 h1, h2, h3, h6{
@@ -52,8 +49,6 @@ h6{
 
 .book-form, .reader-form{
 	width: 45%;
-	/*display: inline-block;
-	margin-bottom: 20px;*/
 }
 
 .reader-form{
