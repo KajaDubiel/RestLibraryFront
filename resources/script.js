@@ -1,8 +1,8 @@
 
 $(document).ready(function() {
 	console.log( "ready!" );
-	//const apiRoot = 'http://localhost:8080/restLibrary/';
-  const apiRoot = 'https://sheltered-scrubland-57989.herokuapp.com/restLibrary/';
+	const apiRoot = 'http://localhost:8080/restLibrary/';
+  //const apiRoot = 'https://sheltered-scrubland-57989.herokuapp.com/restLibrary/';
   var availableBooks = {};
   var booksAmount = 0;
   var readersAmount = 0;
@@ -220,17 +220,17 @@ deleteReaderRequest();
       console.log("clicked");
       selectedBookId = $(this).closest("tr").find(".bookIdTd").html();
       console.log(selectedBookId);
-      });
-
-    $(document).on("click", ".close-add-copy", function(){
-        $("#insert-inventory-num").val("");
     });
 
-      $(document).on("click", ".save-add-copy", function(){
-        var inventoryNumber = "";
-        console.log("save click");
-        inventoryNumber = $("#insert-inventory-num").val();
-        console.log(inventoryNumber);
+    $(document).on("click", ".close-add-copy", function(){
+      $("#insert-inventory-num").val("");
+    });
+
+    $(document).on("click", ".save-add-copy", function(){
+      var inventoryNumber = "";
+      console.log("save click");
+      inventoryNumber = $("#insert-inventory-num").val();
+      console.log(inventoryNumber);
 //do something with values after using close button!! it adds two values in the next time!!
 $.ajax({
   url: requestUrl + "?" + $.param({bookId: selectedBookId}),
@@ -390,7 +390,7 @@ function listBorrowedCopiesInDropdown(copies){
   var result = "";
   for(i = 0; i<copies.length; i++){
     console.log("Listing copy with id: " + copies[i].inventoryNumber + "and inventoryNumber = " + copies[i].inventoryNumber);
-    result += "<a class=\"dropdown-item borrowed-copy\" href=\"#\">" + copies[i].inventoryNumber +  " " + copies[i].book.title + "</a>"
+    result += "<a class=\"dropdown-item borrowed-copy\" href=\"#\">" + copies[i].inventoryNumber + /* " " + copies[i].book.title + */"</a>"
     $(".copies-list").html(result);
   } 
 }
@@ -416,6 +416,7 @@ function returnBorrowedCopyRequest(){
         location.reload();
       },
       error: function(){
+        console.log("readerId: " + selectedReaderId + " copy inv num: " + selectedCopyInventoryNumber);
         console.log("There are no copies to return");
       }
 
