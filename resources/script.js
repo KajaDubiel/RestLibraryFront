@@ -333,26 +333,27 @@ function createBorrowRequest(){
     console.log("reader: " + selectedReaderId + " book: " + selectedBookId);
 
 //add some condition when 0 copies
-$.ajax({
-  url: requestUrl + "?" + $.param({bookId: selectedBookId}) + "&" + $.param({readerId: selectedReaderId}),
-  type: 'POST',
-  success: function(data) {
-    console.log('OK');
-    location.reload();
-  },
-  error: function(jqXHR, textStatus, errorThrown){
-    alert(jqXHR.responseJSON.message);
-  }
-});
-});
+  $.ajax({
+    url: requestUrl + "?" + $.param({bookId: selectedBookId}) + "&" + $.param({readerId: selectedReaderId}),
+    type: 'POST',
+    success: function(data) {
+      console.log('OK');
+      location.reload();
+    },
+   error: function(jqXHR, textStatus, errorThrown){
+      alert(jqXHR.responseJSON.message);
+    }
+  });
+  });
 }
 createBorrowRequest();
 
 function listBorrowedCopiesInDropdownRequest(){
 
   const requestUrl = apiRoot + 'getBorrowedCopies';
-  $(document).on("click", ".return-copy", function(){
-    console.log("return clickedd");
+  $(".readers").on("click", ".return-copy", function(){
+//$(document).on("click", ".readers", ".return-copy", function(){
+    console.log("return clicked");
     var readerId = $(this).closest("tr").find(".readerId").html();
 
     $.ajax({
@@ -368,7 +369,6 @@ function listBorrowedCopiesInDropdownRequest(){
       }
     });
   });
-
 }
 
 listBorrowedCopiesInDropdownRequest();
@@ -377,21 +377,24 @@ function listBorrowedCopiesInDropdown(copies){
   var result = "";
   for(i = 0; i<copies.length; i++){
     console.log("Listing copy with id: " + copies[i].inventoryNumber + "and inventoryNumber = " + copies[i].inventoryNumber);
-    result += "<a class=\"dropdown-item borrowed-copy\" href=\"#\">" + copies[i].inventoryNumber + /* " " + copies[i].book.title + */"</a>"
-    $(".copies-list").html(result);
+    result += "<a class=\"dropdown-item borrowed-copy\" href=\"#\">" + copies[i].inventoryNumber + "</a>"
+    //$(".copies-list").html(result);
+    $(".copies-list").html("");
+    $(".copies-list").append(result);
+
   } 
 }
 
 function returnBorrowedCopyRequest(){
   var selectedReaderId = "";
   const requestUrl = apiRoot + 'returnBorrow?';
-  $(document).on("click", ".return-copy", function(){
+  $(".readers").on("click", ".return-copy", function(){
     console.log("im am going to return borrow");
     selectedReaderId = $(this).closest("tr").find('.readerId').html();
     console.log(selectedReaderId);
   });
 
-  $(document).on("click", ".borrowed-copy", function(){
+  $(".readers").on("click", ".borrowed-copy", function(){
     var selectedCopyInventoryNumber = $(this).text();
     console.log(selectedCopyInventoryNumber);
 
